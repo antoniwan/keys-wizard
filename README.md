@@ -8,6 +8,8 @@ Open a MIDI, Guitar Pro, MusicXML, or text tab file in your browser.
 The notes fall onto a keyboard on the screen.
 The song stops at each note until you play the correct key.
 
+**[Open the app → keys-wizard.vercel.app](https://keys-wizard.vercel.app)**
+
 [![License: MIT](https://img.shields.io/badge/code-MIT-8b6cff.svg)](LICENSE)
 [![Songs: CC0](https://img.shields.io/badge/songs-CC0-5ee1ff.svg)](public/songs/README.md)
 ![Runs in the browser](https://img.shields.io/badge/runs%20in-the%20browser-ffd76a.svg)
@@ -24,6 +26,7 @@ The song stops at each note until you play the correct key.
 - [How to use it](#how-to-use-it)
 - [File types](#file-types)
 - [Limits](#limits)
+- [The site](#the-site)
 - [Songs in this repository](#songs-in-this-repository)
 - [Work on the code](#work-on-the-code)
 - [License](#license)
@@ -144,6 +147,18 @@ These are the things that the app does not do, or does not do well.
 - **Guitar techniques are not shown.** Bends and slides play, but the app shows only the notes.
 - **Safari does not support MIDI.** Use Chrome, Edge, or Firefox.
 - **The app was not tested with many keyboards.** If your keyboard does not work, open an issue.
+
+## The site
+
+The live site is https://keys-wizard.vercel.app. Vercel builds it from the `main` branch after each push.
+
+| Page | What it has |
+| --- | --- |
+| [/](https://keys-wizard.vercel.app/) | The app |
+| [/about](https://keys-wizard.vercel.app/about) | What the app does, its limits, and who made it |
+| [/privacy](https://keys-wizard.vercel.app/privacy) | What data the app uses. The short answer: it stays in your browser. |
+
+The address of the site is one line in `.env` (`VITE_SITE_URL`). Canonical links, `sitemap.xml`, `robots.txt`, `llms.txt`, and the structured data read it at build time.
 
 ## Songs in this repository
 
