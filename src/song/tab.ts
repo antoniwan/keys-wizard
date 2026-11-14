@@ -68,7 +68,7 @@ export function parseTab(text: string, fallbackTitle: string): Song {
       current = [];
     }
   }
-  if (blocks.length === 0) throw new SongError('No tab found in this text. Tab lines look like "e|--0--3--|".');
+  if (blocks.length === 0) throw new SongError('No tab found in this text. A tab line looks like this: e|--0--3--|');
 
   const notes: RawTrack['notes'] = [];
   let offset = 0; // time steps consumed by earlier blocks

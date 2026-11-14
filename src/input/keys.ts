@@ -23,6 +23,11 @@ export function connectComputerKeys(handlers: NoteHandlers): void {
       handlers.noteOn(midi, 0.8);
     }
   });
+  // If the window loses focus, the key-up never arrives. Release the keys.
+  window.addEventListener('blur', () => {
+    for (const midi of down.values()) handlers.noteOff(midi);
+    down.clear();
+  });
   window.addEventListener('keyup', (e) => {
     const midi = down.get(e.code);
     if (midi === undefined) return;

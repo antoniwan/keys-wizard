@@ -3,7 +3,7 @@ import { Practice, type Mode } from './engine/practice';
 import { autoTranspose, prepare, type PNote, type Range } from './engine/prepare';
 import { connectComputerKeys } from './input/keys';
 import { MicInput } from './input/mic';
-import { connectMidi } from './input/midi';
+import { connectMidi, type MidiStatus } from './input/midi';
 import { fetchBundled, listBundled, listSaved, removeSaved, saveSong } from './library';
 import { ACCEPT, loadSong } from './song/load';
 import type { Role, Song } from './song/types';
@@ -23,6 +23,7 @@ interface Settings {
   volume: number;
   monitor: boolean;
   staff: boolean;
+  guides: boolean;
 }
 
 const defaults: Settings = {
@@ -34,6 +35,7 @@ const defaults: Settings = {
   volume: 0.8,
   monitor: true,
   staff: true,
+  guides: true,
 };
 
 function readSettings(): Settings {
@@ -95,6 +97,7 @@ async function openSong(name: string, bytes: Uint8Array, remember: boolean): Pro
     rebuild(false);
     if (remember) await saveSong({ name, title: loaded.title, added: Date.now(), bytes });
 
+    document.title = `${loaded.title} · Keys Wizard`;
     $('song-title').textContent = loaded.title;
     $('song-meta').textContent = [loaded.artist, loaded.format].filter(Boolean).join(' · ');
     for (const id of ['song-info', 'controls', 'progress', 'hud']) $(id).hidden = false;
@@ -105,7 +108,7 @@ async function openSong(name: string, bytes: Uint8Array, remember: boolean): Pro
     renderLoop();
     syncControls();
   } catch (e) {
-    error.textContent = e instanceof Error && e.message ? e.message : 'Something went wrong reading that file.';
+    error.textContent = e instanceof Error && e.message ? e.message : 'Keys Wizard cannot read this file.';
     error.hidden = false;
     showStart();
   }
@@ -123,6 +126,8 @@ function showStart(): void {
     $(id).hidden = true;
   }
   $('start').hidden = false;
+  document.title = 'Keys Wizard';
+  pressed.clear();
   syncStaff();
   void renderShelves();
 }
@@ -135,8 +140,15 @@ async function renderShelves(): Promise<void> {
     ...bundled.map((b) => {
       const li = document.createElement('li');
       const card = songCard(b.title, b.composer, b.level);
-      card.title = `${b.provenance} Licence: ${b.license}.`;
-      card.onclick = async () => openSong(b.file, await fetchBundled(b.file), false);
+      card.title = `${b.provenance} License: ${b.license}.`;
+      card.onclick = async () => {
+        try {
+          await openSong(b.file, await fetchBundled(b.file), false);
+        } catch {
+          $('error').textContent = 'Keys Wizard cannot load this song. Check your connection and try again.';
+          $('error').hidden = false;
+        }
+      };
       li.append(card);
       return li;
     }),
@@ -151,8 +163,8 @@ async function renderShelves(): Promise<void> {
       const remove = document.createElement('button');
       remove.className = 'remove';
       remove.textContent = '✕';
-      remove.title = 'Forget this song';
-      remove.setAttribute('aria-label', `Forget ${s.title}`);
+      remove.title = 'Remove this song from the list';
+      remove.setAttribute('aria-label', `Remove ${s.title} from the list`);
       remove.onclick = async () => {
         await removeSaved(s.name);
         void renderShelves();
@@ -195,14 +207,14 @@ function renderTracks(): void {
       const strong = document.createElement('strong');
       strong.textContent = t.name;
       const info = document.createElement('span');
-      info.textContent = `${t.percussion ? 'Drums' : t.instrument || 'Instrument'} · ${t.noteCount} notes`;
+      info.textContent = `${t.percussion ? 'Drums (no drum sound)' : t.instrument || 'Instrument'} · ${t.noteCount} notes`;
       name.append(strong, info);
 
       const select = document.createElement('select');
       select.setAttribute('aria-label', `Role for ${t.name}`);
       const roles: [Role, string][] = t.percussion
         ? [['mute', 'Muted']]
-        : [['play', 'I play this'], ['backing', 'Plays along'], ['mute', 'Muted']];
+        : [['play', 'I play this'], ['backing', 'Plays with me'], ['mute', 'Muted']];
       for (const [value, label] of roles) select.add(new Option(label, value, false, t.role === value));
       select.disabled = t.percussion;
       select.onchange = () => {
@@ -324,11 +336,11 @@ function frame(now: number): void {
     setText('hud-total', `/ ${clock(song.duration)}`);
 
     let hint = '';
-    if (!synth.ready) hint = 'Click anywhere to turn on sound';
+    if (!synth.ready) hint = 'Click the page to turn on the sound';
     else if (!practice.playing && !practice.finished) {
-      hint = practice.mode === 'listen' ? 'Press Space to listen' : 'Play the glowing key, or press Space, to begin';
+      hint = practice.mode === 'listen' ? 'Press Space to listen' : 'Play the bright key or press Space to start';
     } else if (notes.every((n) => !n.play) && practice.mode !== 'listen') {
-      hint = 'No track is set to “I play this”. Open Tracks to pick one.';
+      hint = 'No track is set to “I play this”. Open Tracks and select one.';
     }
     setText('hint', hint);
     $('hint').hidden = hint === '';
@@ -348,6 +360,7 @@ function frame(now: number): void {
       pressed,
       device: settings.device,
       labels: settings.labels,
+      guides: settings.guides,
   };
   roll.draw(view, dt);
   if (song && settings.staff) staff.draw(view);
@@ -360,13 +373,14 @@ function showDone(): void {
   const listened = practice.mode === 'listen';
   const acc = Math.round(practice.accuracy * 100);
   $('done-title').textContent = listened
-    ? 'That is the song. Ready to try it?'
-    : acc >= 95 ? 'Spellbinding!' : acc >= 80 ? 'Nicely done!' : 'You made it through!';
+    ? 'The song is complete. Now you play it.'
+    : acc >= 95 ? 'Excellent' : acc >= 80 ? 'Good work' : 'Song complete';
+  $('done-stats').hidden = listened;
   $('done-acc').textContent = listened ? '—' : `${acc}%`;
   $('done-hits').textContent = String(s.hits);
   $('done-wrong').textContent = String(s.wrong + s.missed);
   $('done-streak').textContent = String(s.bestStreak);
-  $('done-again').textContent = listened ? 'Let me play it' : 'Play it again';
+  $('done-again').textContent = listened ? 'Play it myself' : 'Play again';
   $('done').hidden = false;
 }
 
@@ -399,6 +413,11 @@ const speed = $<HTMLInputElement>('speed');
 speed.oninput = () => {
   practice.speed = Number(speed.value) / 100;
   $('speed-out').textContent = `${speed.value}%`;
+};
+
+speed.ondblclick = () => {
+  speed.value = '100';
+  speed.dispatchEvent(new Event('input'));
 };
 
 $('oct-down').onclick = () => {
@@ -462,7 +481,7 @@ deviceSize.onchange = () => {
   if (song) transpose = autoTranspose(song, settings.device);
   rebuild(true);
 };
-const bindCheck = (id: string, key: 'fold' | 'labels' | 'monitor', after?: () => void) => {
+const bindCheck = (id: string, key: 'fold' | 'labels' | 'monitor' | 'guides', after?: () => void) => {
   const el = $<HTMLInputElement>(id);
   el.checked = settings[key];
   el.onchange = () => {
@@ -473,6 +492,7 @@ const bindCheck = (id: string, key: 'fold' | 'labels' | 'monitor', after?: () =>
 };
 bindCheck('fold', 'fold', () => rebuild(true));
 bindCheck('labels', 'labels');
+bindCheck('guides', 'guides');
 bindCheck('monitor', 'monitor', () => synth.allOff());
 
 const zoom = $<HTMLInputElement>('zoom');
@@ -524,6 +544,8 @@ window.addEventListener('drop', (e) => {
 window.addEventListener('keydown', (e) => {
   const target = e.target as HTMLElement | null;
   if (target && ['INPUT', 'SELECT', 'TEXTAREA'].includes(target.tagName)) return;
+  // A focused button uses Space for itself. Do not also play or pause.
+  if (e.code === 'Space' && target?.tagName === 'BUTTON') return;
   if (e.code === 'Space' && song) {
     e.preventDefault();
     setPlaying(!practice.playing);
@@ -533,6 +555,19 @@ window.addEventListener('keydown', (e) => {
     $('tracks-panel').hidden = true;
     $('settings-panel').hidden = true;
   }
+});
+
+// If the window loses focus, release all notes so that none stays on.
+window.addEventListener('blur', () => {
+  synth.allOff();
+  pressed.clear();
+});
+
+// After a mouse click on a button, give the focus back to the page.
+// Then Space plays or pauses, and does not press that button again.
+document.addEventListener('click', (e) => {
+  const button = (e.target as HTMLElement | null)?.closest('button');
+  if (button && e.detail > 0) button.blur();
 });
 
 // Sound can only start after a click or key press.
@@ -563,7 +598,7 @@ canvas.addEventListener('pointercancel', release);
 
 // Inputs
 connectComputerKeys(fromKeys);
-void connectMidi(fromKeys, (status) => {
+const onMidiStatus = (status: MidiStatus) => {
   const chip = $('midi-chip');
   chip.classList.toggle('ok', status.state === 'connected');
   chip.classList.toggle('warn', status.state === 'denied' || status.state === 'unsupported');
@@ -571,30 +606,35 @@ void connectMidi(fromKeys, (status) => {
     chip.textContent = `MIDI: ${status.devices.join(', ')}`;
     chip.title = `Connected: ${status.devices.join(', ')}`;
   } else if (status.state === 'none') {
-    chip.textContent = 'MIDI: plug in a keyboard';
+    chip.textContent = 'MIDI: connect a keyboard';
+    chip.title = 'No MIDI keyboard found. Connect one with USB. Click to search again.';
   } else if (status.state === 'denied') {
-    chip.textContent = 'MIDI: permission needed';
-    chip.title = 'Allow MIDI devices for this page in your browser, then reload.';
+    chip.textContent = 'MIDI: permission necessary';
+    chip.title = 'Allow MIDI devices for this page in your browser. Then click here.';
   } else {
-    chip.textContent = 'MIDI: not supported here';
-    chip.title = 'This browser has no Web MIDI. Chrome, Edge, and Firefox do.';
+    chip.textContent = 'MIDI: not supported';
+    chip.title = 'This browser does not support MIDI. Use Chrome, Edge, or Firefox.';
   }
-});
+};
+void connectMidi(fromKeys, onMidiStatus);
+$('midi-chip').onclick = () => void connectMidi(fromKeys, onMidiStatus);
 
 const micBtn = $('mic-btn');
 micBtn.onclick = async () => {
   if (mic.active) {
     mic.stop();
-    micBtn.textContent = 'Mic off';
+    micBtn.textContent = 'Microphone off';
     micBtn.classList.remove('ok');
     return;
   }
   try {
     await mic.start();
-    micBtn.textContent = 'Mic listening';
+    micBtn.textContent = 'Microphone on';
+    micBtn.classList.remove('warn');
     micBtn.classList.add('ok');
   } catch {
-    micBtn.textContent = 'Mic blocked';
+    micBtn.textContent = 'Microphone blocked';
+    micBtn.title = 'Allow the microphone for this page in your browser. Then click here.';
     micBtn.classList.add('warn');
   }
 };

@@ -16,7 +16,7 @@ export async function parseScore(bytes: Uint8Array, fallbackTitle: string, forma
   try {
     score = alphaTab.importer.ScoreLoader.loadScoreFromBytes(bytes, settings);
   } catch {
-    throw new SongError(`Could not read this ${format} file. It may be damaged or an unsupported version.`);
+    throw new SongError(`Keys Wizard cannot read this ${format} file. The file is damaged or its version is not supported.`);
   }
 
   const file = new alphaTab.midi.MidiFile();

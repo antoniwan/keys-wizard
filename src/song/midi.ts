@@ -6,7 +6,7 @@ export function parseMidi(bytes: Uint8Array, fallbackTitle: string): Song {
   try {
     midi = new Midi(bytes);
   } catch {
-    throw new SongError('This does not look like a valid MIDI file.');
+    throw new SongError('This is not a valid MIDI file.');
   }
   const raw: RawTrack[] = midi.tracks.map((t) => ({
     name: t.name || prettyInstrument(t.instrument.name),

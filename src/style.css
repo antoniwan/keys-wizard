@@ -52,7 +52,7 @@ button {
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 6px 12px;
+  padding: 6px 10px;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -76,7 +76,7 @@ button.primary {
 }
 
 button.icon {
-  width: 36px;
+  width: 32px;
   padding: 6px 0;
 }
 
@@ -91,8 +91,8 @@ kbd {
 .bar {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 8px 14px;
+  gap: 10px;
+  padding: 8px 12px;
   background: var(--bg-2);
   border-bottom: 1px solid var(--line);
   flex-wrap: wrap;
@@ -115,7 +115,7 @@ kbd {
   display: flex;
   flex-direction: column;
   line-height: 1.2;
-  max-width: 24ch;
+  max-width: 20ch;
   min-width: 0;
 }
 
@@ -134,7 +134,7 @@ kbd {
 .controls {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 9px;
   flex-wrap: wrap;
 }
 
@@ -172,13 +172,22 @@ kbd {
   font-weight: 600;
 }
 
-.slider span {
+.slider span,
+.label {
   color: var(--muted);
 }
 
+.label {
+  margin-right: 2px;
+}
+
 .slider input {
-  width: 110px;
+  width: 84px;
   accent-color: var(--accent);
+}
+
+button.chip {
+  cursor: pointer;
 }
 
 button.on {
@@ -193,7 +202,8 @@ button.on {
 .status {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  margin-left: auto;
 }
 
 .chip {
@@ -203,7 +213,8 @@ button.on {
   font-size: 12px;
   color: var(--muted);
   background: var(--bg);
-  max-width: 26ch;
+  cursor: default;
+  max-width: 30ch;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -302,7 +313,9 @@ main {
 
 .hint {
   position: absolute;
-  top: 14px;
+  top: 16px;
+  max-width: calc(100% - 420px);
+  text-align: center;
   left: 50%;
   transform: translateX(-50%);
   padding: 8px 16px;
@@ -575,6 +588,13 @@ main {
   background: rgba(13, 11, 26, 0.85);
   z-index: 10;
   pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .hint {
+    top: 84px;
+    max-width: calc(100% - 28px);
+  }
 }
 
 @media (max-width: 720px) {

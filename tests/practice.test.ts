@@ -87,6 +87,16 @@ describe('flow mode', () => {
   });
 });
 
+describe('flow mode, skipped note', () => {
+  it('counts the next note as correct when you skip one and play on in time', () => {
+    const p = start([note(60, 0), note(62, 0.4)], 'flow');
+    p.advance(2.2); // 0.2: the first note is late but still open
+    expect(p.press(62)).toBe('hit');
+    expect(p.state[0]).toBe(NOTE_MISSED);
+    expect(p.stats).toMatchObject({ hits: 1, missed: 1, wrong: 0 });
+  });
+});
+
 describe('listen mode', () => {
   it('sounds every note itself', () => {
     const p = start([note(60, 0), note(40, 0, false)], 'listen');

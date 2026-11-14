@@ -104,8 +104,8 @@ export class Staff {
     ctx.fillStyle = 'rgba(236,233,251,0.85)';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'alphabetic';
-    ctx.font = `${gap * 6.4}px ${MUSIC_FONT}`;
-    ctx.fillText('\u{1D11E}', 38, y(2) + gap * 0.95);
+    ctx.font = `${gap * 7.4}px ${MUSIC_FONT}`;
+    ctx.fillText('\u{1D11E}', 38, y(2) + gap * 1.35);
     ctx.font = `${gap * 4.3}px ${MUSIC_FONT}`;
     ctx.fillText('\u{1D122}', 38, y(-10) + gap * 0.35);
 

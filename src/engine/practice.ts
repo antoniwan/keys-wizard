@@ -181,7 +181,18 @@ export class Practice {
     } else {
       if (!this.pending.has(midi)) {
         // Pressing a chord note twice is not a mistake.
-        return step.pitches.includes(midi) ? 'free' : this.miss();
+        if (step.pitches.includes(midi)) return 'free';
+        // Flow mode: you skipped a note and played the next one in time.
+        // Count the skipped note as missed and this one as correct.
+        const next = this.steps[this.stepIndex + 1];
+        if (
+          this.mode === 'flow' && this.time >= step.time &&
+          next && next.pitches.includes(midi) && next.time - this.time <= EARLY
+        ) {
+          this.failStep();
+          return this.press(midi);
+        }
+        return this.miss();
       }
       this.pending.delete(midi);
     }

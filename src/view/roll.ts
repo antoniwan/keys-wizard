@@ -16,6 +16,8 @@ export interface Frame {
   /** The reach of the player's own keyboard. */
   device: Range;
   labels: boolean;
+  /** Draw a faint line from each coming note down to its key. */
+  guides: boolean;
 }
 
 interface Spark {
@@ -48,6 +50,8 @@ export class Roll {
   private sparks: Spark[] = [];
   private trackColor = new Map<number, number>();
   private maxDuration = 1;
+  /** True when the player asked the system for less motion. */
+  private calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   /** Seconds of music visible above the keyboard. */
   lookahead = 3.2;
 
@@ -127,7 +131,7 @@ export class Roll {
 
   /** A little burst where a note lands. */
   burst(midi: number, good: boolean): void {
-    if (midi < this.lo || midi > this.hi) return;
+    if (midi < this.lo || midi > this.hi || this.calm) return;
     const x = this.keyX[midi] + this.keyW[midi] / 2;
     const y = this.height - this.keyboardHeight;
     for (let i = 0; i < (good ? 10 : 5); i++) {
@@ -172,6 +176,24 @@ export class Roll {
     const until = f.time + this.lookahead;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'bottom';
+
+    // Guide lines first, so they stay behind the notes: a faint line from each
+    // coming note down to the key it lands on.
+    if (f.guides) {
+      for (let k = i; k < f.notes.length; k++) {
+        const n = f.notes[k];
+        if (n.time > until) break;
+        if (!n.play || n.midi < this.lo || n.midi > this.hi) continue;
+        const state = f.state[k];
+        const bottom = hitY - (n.time - f.time) * pxPerSec;
+        if (state === NOTE_HIT || state === NOTE_MISSED || bottom >= hitY - 2 || bottom < 0) continue;
+        ctx.globalAlpha = f.targets.has(n.midi) ? 0.34 : 0.17;
+        ctx.fillStyle = TRACK_COLORS[(this.trackColor.get(n.track) ?? 0) % TRACK_COLORS.length].fill;
+        ctx.fillRect(Math.round(this.keyX[n.midi] + this.keyW[n.midi] / 2) - 0.5, bottom, 1, hitY - bottom);
+      }
+      ctx.globalAlpha = 1;
+    }
+
     for (let pass = 0; pass < 2; pass++) {
       // Backing first, then your notes on top.
       for (let k = i; k < f.notes.length; k++) {
@@ -236,7 +258,7 @@ export class Roll {
 
   private drawKeyboard(f: Frame, top: number, h: number): void {
     const ctx = this.ctx;
-    const pulse = 0.65 + 0.35 * Math.sin(performance.now() / 160);
+    const pulse = this.calm ? 0.85 : 0.65 + 0.35 * Math.sin(performance.now() / 160);
     ctx.fillStyle = '#0a0814';
     ctx.fillRect(0, top, this.width, h);
 

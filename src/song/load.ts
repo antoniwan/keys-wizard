@@ -32,5 +32,5 @@ export async function loadSong(name: string, bytes: Uint8Array): Promise<Song> {
   if (['txt', 'tab', 'crd', ''].includes(ext)) {
     return parseTab(new TextDecoder().decode(bytes), title);
   }
-  throw new SongError(`Keys Wizard cannot read .${ext} files yet. Try MIDI, Guitar Pro, MusicXML, or text tab.`);
+  throw new SongError(`Keys Wizard cannot read .${ext} files. Use a MIDI, Guitar Pro, MusicXML, or text tab file.`);
 }

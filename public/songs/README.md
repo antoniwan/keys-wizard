@@ -1,10 +1,10 @@
 # Bundled songs
 
-Every file in this folder is one we are allowed to share. The rule and how to add a song are in [AGENTS.md](../../AGENTS.md).
+We have permission to share each file in this folder. The rule, and the steps to add a song, are in [AGENTS.md](../../AGENTS.md).
 
-These files are built from the sources in `songs-src/` by `npm run songs`. Do not edit them by hand.
+The command `npm run songs` builds these files from the sources in `songs-src/`. Do not change these files by hand.
 
-The arrangements are released under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/): use them however you like.
+The arrangements have the [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/) license. You can use them for any purpose.
 
 | File | Piece | Where the music comes from |
 | --- | --- | --- |

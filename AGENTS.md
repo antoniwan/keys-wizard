@@ -69,11 +69,12 @@ Stack: Vite, TypeScript, no UI framework, one canvas. Web MIDI for the keyboard,
 | `src/view/roll.ts` | Draws the falling notes and the keyboard. |
 | `src/view/staff.ts` | Draws the sheet-music strip: note heads on a grand staff, pitch only, no rhythm. |
 | `src/main.ts` | Wires the page together. |
+| `docs/screenshots/` | Pictures for the README. Take new ones when the look of the app changes. |
 
 Conventions:
 
 - Keep the practice engine free of DOM and audio code so it stays testable.
 - New file formats go through `loadSong` and return a `Song`. Add a test.
 - Do not add sampled instruments, sound fonts, or fonts unless their licence allows redistribution and you record it. The same care that applies to songs applies to every asset.
-- Text shown to the player is plain and friendly. Say what happened and what to do next.
+- Text in the app and in the README files follows ASD-STE100 Simplified Technical English as far as is practical: short sentences, one idea in each, active voice, simple words, the same word for the same thing. Say what happened and what to do next. Be honest about what the app cannot do.
 - Code is MIT (`LICENSE`). Bundled songs are CC0 (`public/songs/README.md`).

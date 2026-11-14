@@ -43,7 +43,7 @@ export class SongError extends Error {}
 /** Turns parsed tracks into a Song: drops empty tracks, sorts notes, picks default roles. */
 export function buildSong(title: string, artist: string, format: string, raw: RawTrack[]): Song {
   const kept = raw.filter((t) => t.notes.length > 0);
-  if (kept.length === 0) throw new SongError('This file has no notes in it.');
+  if (kept.length === 0) throw new SongError('This file has no notes.');
 
   const tracks: SongTrack[] = [];
   const notes: SongNote[] = [];
