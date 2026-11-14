@@ -8,7 +8,7 @@ Open a MIDI, Guitar Pro, MusicXML, or text tab file in your browser.
 The notes fall onto a keyboard on the screen.
 The song stops at each note until you play the correct key.
 
-**[Open the app → keys-wizard.vercel.app](https://keys-wizard.vercel.app)**
+**[Open the app → keys.antoniwan.online](https://keys.antoniwan.online)**
 
 [![License: MIT](https://img.shields.io/badge/code-MIT-8b6cff.svg)](LICENSE)
 [![Songs: CC0](https://img.shields.io/badge/songs-CC0-5ee1ff.svg)](public/songs/README.md)
@@ -150,13 +150,13 @@ These are the things that the app does not do, or does not do well.
 
 ## The site
 
-The live site is https://keys-wizard.vercel.app. Vercel builds it from the `main` branch after each push.
+The live site is https://keys.antoniwan.online. Vercel builds it from the `main` branch after each push.
 
 | Page | What it has |
 | --- | --- |
-| [/](https://keys-wizard.vercel.app/) | The app |
-| [/about](https://keys-wizard.vercel.app/about) | What the app does, its limits, and who made it |
-| [/privacy](https://keys-wizard.vercel.app/privacy) | What data the app uses. The short answer: it stays in your browser. |
+| [/](https://keys.antoniwan.online/) | The app |
+| [/about](https://keys.antoniwan.online/about) | What the app does, its limits, and who made it |
+| [/privacy](https://keys.antoniwan.online/privacy) | What data the app uses. The short answer: it stays in your browser. |
 
 The address of the site is the `homepage` field in `package.json`. Canonical links, `sitemap.xml`, `robots.txt`, `llms.txt`, and the structured data read it at build time.
 

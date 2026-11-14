@@ -12,7 +12,7 @@ Add this object to the `projects` array in `src/data/projects.ts`. That file sor
 {
   title: 'Keys Wizard',
   category: 'apps-and-tools',
-  href: 'https://keys-wizard.vercel.app',
+  href: 'https://keys.antoniwan.online',
   repo: 'https://github.com/antoniwan/keys-wizard',
   body: 'A page that teaches me songs on my MIDI keyboard. I open a MIDI, Guitar Pro, or tab file, the notes fall onto the keys, and the song waits until I play the right one. A staff above the notes helps me learn to read music.',
   stack: 'TypeScript, Vite, Web MIDI',
@@ -28,7 +28,7 @@ The `body` is written in the first person, like the other entries. Change the wo
 | Field | Value |
 | --- | --- |
 | Name | Keys Wizard |
-| Live address | https://keys-wizard.vercel.app |
+| Live address | https://keys.antoniwan.online |
 | Repository | https://github.com/antoniwan/keys-wizard |
 | Started | November 14, 2026 |
 | Status | Works. Not yet tested with many MIDI keyboards. |
@@ -84,15 +84,15 @@ If the Projects page lists each project in its JSON-LD, this is the item for Key
 ```json
 {
   "@type": "WebApplication",
-  "@id": "https://keys-wizard.vercel.app/#app",
+  "@id": "https://keys.antoniwan.online/#app",
   "name": "Keys Wizard",
-  "url": "https://keys-wizard.vercel.app/",
+  "url": "https://keys.antoniwan.online/",
   "description": "A free web app to learn songs on a MIDI keyboard. Open a MIDI, Guitar Pro, or tab file. The notes fall onto the keyboard and the song waits for you.",
   "applicationCategory": "EducationalApplication",
   "operatingSystem": "Any",
   "isAccessibleForFree": true,
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "image": "https://keys-wizard.vercel.app/og.png",
+  "image": "https://keys.antoniwan.online/og.png",
   "sameAs": "https://github.com/antoniwan/keys-wizard",
   "author": { "@id": "https://antoniwan.online/#person" }
 }
@@ -103,19 +103,19 @@ If the Projects page lists each project in its JSON-LD, this is the item for Key
 If `llms.txt` on antoniwan.online lists your projects, add this line:
 
 ```md
-- [Keys Wizard](https://keys-wizard.vercel.app): a free web app to learn songs on a MIDI keyboard. It opens MIDI, Guitar Pro, MusicXML, and text tab files, and the song waits until you play the correct key. Open source (MIT).
+- [Keys Wizard](https://keys.antoniwan.online): a free web app to learn songs on a MIDI keyboard. It opens MIDI, Guitar Pro, MusicXML, and text tab files, and the song waits until you play the correct key. Open source (MIT).
 ```
 
-Keys Wizard has its own file at https://keys-wizard.vercel.app/llms.txt.
+Keys Wizard has its own file at https://keys.antoniwan.online/llms.txt.
 
 ## 7. Pages on the Keys Wizard site
 
 | Page | Address |
 | --- | --- |
-| The app | https://keys-wizard.vercel.app/ |
-| About | https://keys-wizard.vercel.app/about |
-| Privacy | https://keys-wizard.vercel.app/privacy |
-| Sitemap | https://keys-wizard.vercel.app/sitemap.xml |
+| The app | https://keys.antoniwan.online/ |
+| About | https://keys.antoniwan.online/about |
+| Privacy | https://keys.antoniwan.online/privacy |
+| Sitemap | https://keys.antoniwan.online/sitemap.xml |
 
 The About page and the footer of the start page link back to https://antoniwan.online.
 

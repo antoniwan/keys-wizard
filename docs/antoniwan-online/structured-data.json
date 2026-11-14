@@ -1,14 +1,14 @@
 {
   "@type": "WebApplication",
-  "@id": "https://keys-wizard.vercel.app/#app",
+  "@id": "https://keys.antoniwan.online/#app",
   "name": "Keys Wizard",
-  "url": "https://keys-wizard.vercel.app/",
+  "url": "https://keys.antoniwan.online/",
   "description": "A free web app to learn songs on a MIDI keyboard. Open a MIDI, Guitar Pro, or tab file. The notes fall onto the keyboard and the song waits for you.",
   "applicationCategory": "EducationalApplication",
   "operatingSystem": "Any",
   "isAccessibleForFree": true,
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "image": "https://keys-wizard.vercel.app/og.png",
+  "image": "https://keys.antoniwan.online/og.png",
   "sameAs": "https://github.com/antoniwan/keys-wizard",
   "author": { "@id": "https://antoniwan.online/#person" }
 }
