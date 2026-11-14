@@ -3,10 +3,84 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Open a MIDI, Guitar Pro, or tab file and learn the song on your keyboard. The song waits for you." />
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎹</text></svg>" />
-    <title>Keys Wizard</title>
+    <title>Keys Wizard: learn songs on your MIDI keyboard</title>
+    <meta name="description" content="A free web app to learn songs on a MIDI keyboard. Open a MIDI, Guitar Pro, or tab file. The notes fall onto the keyboard and the song waits for you." />
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
+    <meta name="author" content="Antonio Rodríguez Martínez" />
+    <meta name="theme-color" content="#15122a" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Keys Wizard" />
+    <meta property="og:title" content="Keys Wizard: learn songs on your MIDI keyboard" />
+    <meta property="og:description" content="Open a MIDI, Guitar Pro, or tab file. The notes fall onto the keyboard. The song waits until you play the correct key. Free and open source." />
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="%VITE_SITE_URL%/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Keys Wizard: notes fall onto a keyboard on the screen, with sheet music above" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Keys Wizard: learn songs on your MIDI keyboard" />
+    <meta name="twitter:description" content="Open a MIDI, Guitar Pro, or tab file. The song waits until you play the correct key. Free and open source." />
+    <meta name="twitter:image" content="%VITE_SITE_URL%/og.png" />
+
     <link rel="stylesheet" href="/src/style.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "%VITE_SITE_URL%/#website",
+            "url": "%VITE_SITE_URL%/",
+            "name": "Keys Wizard",
+            "description": "A free web app to learn songs on a MIDI keyboard.",
+            "inLanguage": "en",
+            "publisher": { "@id": "https://antoniwan.online/#person" }
+          },
+          {
+            "@type": "WebApplication",
+            "@id": "%VITE_SITE_URL%/#app",
+            "name": "Keys Wizard",
+            "url": "%VITE_SITE_URL%/",
+            "description": "Open a MIDI, Guitar Pro, MusicXML, or text tab file. The notes fall onto a keyboard on the screen. The song waits until you play the correct key on your MIDI keyboard.",
+            "applicationCategory": "EducationalApplication",
+            "applicationSubCategory": "Music practice",
+            "operatingSystem": "Any",
+            "browserRequirements": "A current browser. Chrome, Edge, or Firefox for MIDI keyboards.",
+            "inLanguage": "en",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+            "featureList": [
+              "Opens MIDI, Guitar Pro, MusicXML, alphaTex, and text tab files",
+              "Works with USB MIDI keyboards",
+              "Wait mode: the song stops until you play the correct note",
+              "Shows the notes on a treble and bass staff",
+              "Fits songs to keyboards with 25, 49, 61, 76, or 88 keys",
+              "Speed control and loop for practice",
+              "Song files stay in the browser"
+            ],
+            "screenshot": "%VITE_SITE_URL%/og.png",
+            "image": "%VITE_SITE_URL%/og.png",
+            "license": "https://opensource.org/license/mit",
+            "sameAs": "https://github.com/antoniwan/keys-wizard",
+            "isPartOf": { "@id": "%VITE_SITE_URL%/#website" },
+            "author": { "@id": "https://antoniwan.online/#person" },
+            "creator": { "@id": "https://antoniwan.online/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://antoniwan.online/#person",
+            "name": "Antonio Rodríguez Martínez",
+            "alternateName": "antoniwan",
+            "url": "https://antoniwan.online"
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="app">
@@ -157,6 +231,16 @@
                 <ul id="bundled-list"></ul>
               </div>
             </div>
+
+            <footer class="start-foot">
+              <span>Free and open source. No account. No ads. Your files stay on your computer.</span>
+              <nav aria-label="Pages">
+                <a href="/about">About</a>
+                <a href="/privacy">Privacy</a>
+                <a href="https://github.com/antoniwan/keys-wizard">GitHub</a>
+                <a href="https://antoniwan.online" rel="author">Made by antoniwan</a>
+              </nav>
+            </footer>
           </div>
         </section>
 
@@ -179,6 +263,12 @@
         <div class="dropping" id="dropping" hidden>Drop the file here</div>
       </main>
     </div>
+    <noscript>
+      <p style="padding: 24px; font: 16px system-ui, sans-serif; color: #ece9fb">
+        Keys Wizard is a free web app to learn songs on a MIDI keyboard. It needs JavaScript. Turn on JavaScript in
+        your browser, then load this page again. Read <a href="/about" style="color: #5ee1ff">about the app</a>.
+      </p>
+    </noscript>
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>

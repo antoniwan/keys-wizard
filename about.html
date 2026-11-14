@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Keys Wizard: what it does and who made it</title>
+    <meta name="description" content="Keys Wizard is a free, open source web app to learn songs on a MIDI keyboard. Read what it does, what it cannot do, and who made it." />
+    <link rel="canonical" href="%VITE_SITE_URL%/about" />
+    <meta name="theme-color" content="#15122a" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Keys Wizard" />
+    <meta property="og:title" content="About Keys Wizard" />
+    <meta property="og:description" content="A free, open source web app to learn songs on a MIDI keyboard. What it does, what it cannot do, and who made it." />
+    <meta property="og:url" content="%VITE_SITE_URL%/about" />
+    <meta property="og:image" content="%VITE_SITE_URL%/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Keys Wizard: notes fall onto a keyboard on the screen, with sheet music above" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="/src/pages.css" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "AboutPage",
+            "@id": "%VITE_SITE_URL%/about",
+            "url": "%VITE_SITE_URL%/about",
+            "name": "About Keys Wizard",
+            "inLanguage": "en",
+            "isPartOf": { "@id": "%VITE_SITE_URL%/#website" },
+            "about": { "@id": "%VITE_SITE_URL%/#app" }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Keys Wizard", "item": "%VITE_SITE_URL%/" },
+              { "@type": "ListItem", "position": 2, "name": "About", "item": "%VITE_SITE_URL%/about" }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Is Keys Wizard free?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Yes. Keys Wizard is free. It has no accounts, no ads, and no paid version. The code is open source with the MIT license." }
+              },
+              {
+                "@type": "Question",
+                "name": "Which files can Keys Wizard open?",
+                "acceptedAnswer": { "@type": "Answer", "text": "MIDI files, Guitar Pro files (gp3, gp4, gp5, gpx, gp), MusicXML files, alphaTex files, and text tab for guitar and bass." }
+              },
+              {
+                "@type": "Question",
+                "name": "Do I need a MIDI keyboard?",
+                "acceptedAnswer": { "@type": "Answer", "text": "A USB MIDI keyboard gives the best result. You can also use the computer keyboard, click the keys on the screen, or use the microphone for one note at a time." }
+              },
+              {
+                "@type": "Question",
+                "name": "Does Keys Wizard upload my song files?",
+                "acceptedAnswer": { "@type": "Answer", "text": "No. Your song files stay in your browser on your computer. The app does not send them to a server." }
+              },
+              {
+                "@type": "Question",
+                "name": "Which browsers work?",
+                "acceptedAnswer": { "@type": "Answer", "text": "Chrome, Edge, and Firefox support MIDI keyboards. Safari does not support MIDI. In Safari you can use the computer keyboard or the microphone." }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <header class="top">
+      <a class="brand" href="/"><span aria-hidden="true">✦</span> Keys Wizard</a>
+      <nav aria-label="Pages">
+        <a href="/">The app</a>
+        <a href="/about" aria-current="page">About</a>
+        <a href="/privacy">Privacy</a>
+      </nav>
+    </header>
+
+    <main>
+      <h1>About Keys Wizard</h1>
+      <p class="lede">
+        Keys Wizard helps you learn a song on a keyboard. You open a song file. The notes fall onto a keyboard on
+        the screen. The song waits until you play the correct key.
+      </p>
+      <a class="button" href="/">Open the app</a>
+
+      <h2>Why it was made</h2>
+      <p>
+        I made Keys Wizard to learn songs on my own keyboard, an M-Audio Keystation 49 MK3. I had song files in
+        many formats: MIDI, Guitar Pro, and text tab. I wanted one page that opens all of them and waits for me
+        while I find each note.
+      </p>
+      <p>
+        I also wanted to learn to read sheet music. Thus the app shows a treble and bass staff above the falling
+        notes. Each note that you play appears on the staff.
+      </p>
+
+      <h2>What it does</h2>
+      <ul>
+        <li>It opens MIDI, Guitar Pro, MusicXML, alphaTex, and text tab files.</li>
+        <li>It hears a USB MIDI keyboard. It also accepts the computer keyboard and the microphone.</li>
+        <li>In Wait mode, the song stops at each note or chord until you play it.</li>
+        <li>It shows the notes on a treble and bass staff.</li>
+        <li>It moves a song by octaves to fit a keyboard with 25, 49, 61, 76, or 88 keys.</li>
+        <li>You select the track that you play. The app plays the other tracks.</li>
+        <li>You can change the speed and repeat a hard part.</li>
+      </ul>
+
+      <h2>What it cannot do</h2>
+      <ul>
+        <li>The staff shows pitch only. It does not show rhythm, rests, or bar lines.</li>
+        <li>The microphone hears one note at a time. It cannot hear chords.</li>
+        <li>There is no drum sound. Drum tracks are muted.</li>
+        <li>The sound is a simple synthesizer. It is not a recorded piano.</li>
+        <li>Safari does not support MIDI keyboards. Use Chrome, Edge, or Firefox.</li>
+        <li>It is not a teacher. It does not teach fingering, posture, or music theory.</li>
+      </ul>
+
+      <h2>Questions</h2>
+      <div class="card">
+        <h3>Is it free?</h3>
+        <p>Yes. It has no accounts, no ads, and no paid version.</p>
+        <h3>Which files can it open?</h3>
+        <p>
+          MIDI files, Guitar Pro files (gp3, gp4, gp5, gpx, gp), MusicXML files, alphaTex files, and text tab for
+          guitar and bass.
+        </p>
+        <h3>Which browsers work?</h3>
+        <p>
+          Chrome, Edge, and Firefox support MIDI keyboards. Safari does not support MIDI. In Safari you can use
+          the computer keyboard or the microphone.
+        </p>
+        <h3>Do I need a MIDI keyboard?</h3>
+        <p>
+          A USB MIDI keyboard gives the best result. You can also use the computer keyboard, click the keys on the
+          screen, or use the microphone for one note at a time.
+        </p>
+        <h3>Does it upload my song files?</h3>
+        <p>No. Your files stay in your browser on your computer. Read the <a href="/privacy">privacy page</a>.</p>
+        <h3>Where do the free songs come from?</h3>
+        <p>
+          Each free song is in the public domain, or was written for this project. The arrangements have the CC0
+          license. The app does not include songs that have copyright.
+        </p>
+      </div>
+
+      <h2>Open source</h2>
+      <p>
+        The code is on <a href="https://github.com/antoniwan/keys-wizard">GitHub</a> with the MIT license. You can
+        read it, copy it, and change it. If you find a problem,
+        <a href="https://github.com/antoniwan/keys-wizard/issues">open an issue</a>.
+      </p>
+      <p>The app uses two libraries from other people:</p>
+      <ul>
+        <li><a href="https://alphatab.net">alphaTab</a> reads Guitar Pro and MusicXML files.</li>
+        <li><a href="https://github.com/Tonejs/Midi">@tonejs/midi</a> reads MIDI files.</li>
+      </ul>
+
+      <h2>Who made it</h2>
+      <p>
+        My name is Antonio Rodríguez Martínez. On the web I am antoniwan. I am from Puerto Rico and I live in
+        Florida. I make small things for the web. You can see the others at
+        <a href="https://antoniwan.online" rel="author">antoniwan.online</a>.
+      </p>
+      <p class="muted">
+        An AI coding assistant wrote most of the code with me. I tell you this because it is true.
+      </p>
+    </main>
+
+    <footer class="foot">
+      <span>Keys Wizard</span>
+      <a href="/">The app</a>
+      <a href="/about">About</a>
+      <a href="/privacy">Privacy</a>
+      <a href="https://github.com/antoniwan/keys-wizard">GitHub</a>
+      <a href="https://antoniwan.online">antoniwan.online</a>
+    </footer>
+  </body>
+</html>
