@@ -1,5 +1,13 @@
 import { resolve } from 'node:path';
-import { defineConfig, loadEnv, type Plugin } from 'vite';
+import { defineConfig, type Plugin } from 'vite';
+import pkg from './package.json';
+
+/**
+ * The public address of the site: the homepage field in package.json.
+ * Canonical links, the sitemap, robots.txt, llms.txt, and the structured
+ * data all read it. If the site moves, change that one field.
+ */
+const SITE = pkg.homepage.replace(/\/$/, '');
 
 /** The pages of the site, with what a search engine should know about each. */
 const PAGES = [
@@ -8,14 +16,22 @@ const PAGES = [
   { path: '/privacy', file: 'privacy.html', priority: '0.4' },
 ];
 
+/** Puts the site address into each page where it says %SITE_URL%. */
+function siteUrl(): Plugin {
+  return {
+    name: 'keys-wizard-site-url',
+    transformIndexHtml: { order: 'pre', handler: (html) => html.replaceAll('%SITE_URL%', SITE) },
+  };
+}
+
 /** Writes robots.txt, sitemap.xml, and llms.txt with the correct site address. */
-function seoFiles(site: string): Plugin {
+function seoFiles(): Plugin {
   const today = new Date().toISOString().slice(0, 10);
   return {
     name: 'keys-wizard-seo-files',
     generateBundle() {
       const urls = PAGES.map(
-        (p) => `  <url><loc>${site}${p.path}</loc><lastmod>${today}</lastmod><priority>${p.priority}</priority></url>`,
+        (p) => `  <url><loc>${SITE}${p.path}</loc><lastmod>${today}</lastmod><priority>${p.priority}</priority></url>`,
       );
       this.emitFile({
         type: 'asset',
@@ -25,7 +41,7 @@ function seoFiles(site: string): Plugin {
       this.emitFile({
         type: 'asset',
         fileName: 'robots.txt',
-        source: `User-agent: *\nAllow: /\n\nSitemap: ${site}/sitemap.xml\n`,
+        source: `User-agent: *\nAllow: /\n\nSitemap: ${SITE}/sitemap.xml\n`,
       });
       this.emitFile({
         type: 'asset',
@@ -39,9 +55,9 @@ function seoFiles(site: string): Plugin {
           '',
           '## Pages',
           '',
-          `- [The app](${site}/): open a song and practice it`,
-          `- [About](${site}/about): what the app does, its limits, and who made it`,
-          `- [Privacy](${site}/privacy): what data the app uses and where the data stays`,
+          `- [The app](${SITE}/): open a song and practice it`,
+          `- [About](${SITE}/about): what the app does, its limits, and who made it`,
+          `- [Privacy](${SITE}/privacy): what data the app uses and where the data stays`,
           '',
           '## Source',
           '',
@@ -69,18 +85,15 @@ function cleanUrls(): Plugin {
   };
 }
 
-export default defineConfig(({ mode }) => {
-  const site = (loadEnv(mode, process.cwd()).VITE_SITE_URL ?? '').replace(/\/$/, '');
-  return {
-    server: { port: 5183 },
-    plugins: [cleanUrls(), seoFiles(site)],
-    build: {
-      chunkSizeWarningLimit: 2500,
-      rollupOptions: {
-        input: Object.fromEntries(
-          [...PAGES.map((p) => p.file), '404.html'].map((f) => [f.replace('.html', ''), resolve(__dirname, f)]),
-        ),
-      },
+export default defineConfig({
+  server: { port: 5183 },
+  plugins: [siteUrl(), cleanUrls(), seoFiles()],
+  build: {
+    chunkSizeWarningLimit: 2500,
+    rollupOptions: {
+      input: Object.fromEntries(
+        [...PAGES.map((p) => p.file), '404.html'].map((f) => [f.replace('.html', ''), resolve(__dirname, f)]),
+      ),
     },
-  };
+  },
 });

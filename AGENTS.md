@@ -71,7 +71,7 @@ Stack: Vite, TypeScript, no UI framework, one canvas. Web MIDI for the keyboard,
 | `src/main.ts` | Wires the page together. |
 | `about.html`, `privacy.html`, `404.html` | The text pages. They share `src/pages.css`. |
 | `vite.config.ts` | Lists the pages and writes `sitemap.xml`, `robots.txt`, and `llms.txt` at build time. |
-| `.env` | `VITE_SITE_URL`, the public address of the site. It is not a secret. |
+| `package.json` | Its `homepage` field is the public address of the site. |
 | `vercel.json` | Clean URLs and security headers for Vercel. |
 | `docs/antoniwan-online/` | Info package for the Projects page of antoniwan.online. |
 | `docs/screenshots/` | Pictures for the README. Take new ones when the look of the app changes. |

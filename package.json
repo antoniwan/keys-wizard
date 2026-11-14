@@ -6,6 +6,7 @@
   "type": "module",
   "license": "MIT",
   "repository": "github:antoniwan/keys-wizard",
+  "homepage": "https://keys-wizard.vercel.app",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",

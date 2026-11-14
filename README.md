@@ -158,7 +158,7 @@ The live site is https://keys-wizard.vercel.app. Vercel builds it from the `main
 | [/about](https://keys-wizard.vercel.app/about) | What the app does, its limits, and who made it |
 | [/privacy](https://keys-wizard.vercel.app/privacy) | What data the app uses. The short answer: it stays in your browser. |
 
-The address of the site is one line in `.env` (`VITE_SITE_URL`). Canonical links, `sitemap.xml`, `robots.txt`, `llms.txt`, and the structured data read it at build time.
+The address of the site is the `homepage` field in `package.json`. Canonical links, `sitemap.xml`, `robots.txt`, `llms.txt`, and the structured data read it at build time.
 
 ## Songs in this repository
 

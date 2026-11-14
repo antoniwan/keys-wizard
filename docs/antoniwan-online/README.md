@@ -124,7 +124,7 @@ The About page and the footer of the start page link back to https://antoniwan.o
 Cookbook is at `cookbook.antoniwan.online`. If you give Keys Wizard an address of the same kind:
 
 1. Add the domain to the `keys-wizard` project in Vercel.
-2. In the keys-wizard repository, change `VITE_SITE_URL` in `.env`. Canonical links, the sitemap, `robots.txt`, `llms.txt`, and the structured data all read that one line.
+2. In the keys-wizard repository, change the `homepage` field in `package.json`. Canonical links, the sitemap, `robots.txt`, `llms.txt`, and the structured data all read that one field.
 3. Change the address in this folder and in `README.md`.
 4. Change `href` in the project entry on antoniwan.online.
 
