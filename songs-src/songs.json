@@ -1,0 +1,32 @@
+[
+  {
+    "id": "twinkle",
+    "level": "Beginner",
+    "license": "CC0-1.0",
+    "provenance": "Traditional melody (public domain). Arrangement written for this repo."
+  },
+  {
+    "id": "ode-to-joy",
+    "level": "Beginner",
+    "license": "CC0-1.0",
+    "provenance": "Beethoven, Symphony No. 9 (1824, public domain). Arrangement written for this repo."
+  },
+  {
+    "id": "minuet-in-g",
+    "level": "Intermediate",
+    "license": "CC0-1.0",
+    "provenance": "Christian Petzold, Notebook for Anna Magdalena Bach (1725, public domain). Arrangement written for this repo."
+  },
+  {
+    "id": "fur-elise",
+    "level": "Intermediate",
+    "license": "CC0-1.0",
+    "provenance": "Beethoven, WoO 59 (1810, public domain). Arrangement written for this repo."
+  },
+  {
+    "id": "tower-stairs",
+    "level": "Beginner",
+    "license": "CC0-1.0",
+    "provenance": "Original guitar etude written for this repo."
+  }
+]

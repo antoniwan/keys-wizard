@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Drop in a MIDI, Guitar Pro, or tab file and learn it on your keyboard. The song waits for you." />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎹</text></svg>" />
+    <title>Keys Wizard</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="bar">
+        <button id="home" class="brand" title="Back to your songs">
+          <span class="brand-mark" aria-hidden="true">✦</span> Keys Wizard
+        </button>
+
+        <div class="song-info" id="song-info" hidden>
+          <strong id="song-title"></strong>
+          <span id="song-meta"></span>
+        </div>
+
+        <div class="controls" id="controls" hidden>
+          <div class="group">
+            <button id="restart" class="icon" title="Start over (Home)" aria-label="Start over">⏮</button>
+            <button id="play" class="icon primary" title="Play or pause (Space)" aria-label="Play or pause">▶</button>
+          </div>
+
+          <div class="group seg" role="radiogroup" aria-label="Practice mode">
+            <button data-mode="wait" role="radio" title="The song waits until you play the right note">Wait</button>
+            <button data-mode="flow" role="radio" title="The song keeps going. Keep up and score your timing">Flow</button>
+            <button data-mode="listen" role="radio" title="Watch and listen to the song play itself">Listen</button>
+          </div>
+
+          <label class="group slider" title="Tempo">
+            <span>Speed</span>
+            <input id="speed" type="range" min="25" max="150" step="5" value="100" />
+            <output id="speed-out">100%</output>
+          </label>
+
+          <div class="group">
+            <button id="loop-a" title="Set loop start at the playhead">A</button>
+            <button id="loop-b" title="Set loop end at the playhead">B</button>
+            <button id="loop-clear" title="Clear the loop" hidden>✕</button>
+          </div>
+
+          <div class="group" title="Move the song up or down an octave to suit your keyboard">
+            <button id="oct-down" aria-label="Octave down">−8va</button>
+            <output id="oct-out">0</output>
+            <button id="oct-up" aria-label="Octave up">+8va</button>
+          </div>
+
+          <button id="tracks-btn" aria-expanded="false">Tracks</button>
+          <button id="settings-btn" aria-expanded="false">Settings</button>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="status">
+          <span id="midi-chip" class="chip" title="USB MIDI keyboard">MIDI: looking…</span>
+          <button id="mic-btn" class="chip" title="Use the microphone to hear an acoustic instrument">Mic off</button>
+          <button id="open-btn" class="primary">Open song</button>
+          <input id="file" type="file" hidden />
+        </div>
+      </header>
+
+      <div class="progress" id="progress" hidden>
+        <div class="progress-loop" id="progress-loop"></div>
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+
+      <main>
+        <canvas id="roll"></canvas>
+
+        <div class="hud" id="hud" hidden>
+          <div><b id="hud-acc">100%</b><span>accuracy</span></div>
+          <div><b id="hud-streak">0</b><span>streak</span></div>
+          <div><b id="hud-time">0:00</b><span id="hud-total">/ 0:00</span></div>
+        </div>
+
+        <div class="hint" id="hint" hidden></div>
+
+        <aside class="panel" id="tracks-panel" hidden>
+          <h2>Tracks</h2>
+          <p class="muted">Pick what you play. Backing tracks play along; muted tracks are hidden.</p>
+          <div id="tracks-list"></div>
+        </aside>
+
+        <aside class="panel" id="settings-panel" hidden>
+          <h2>Settings</h2>
+          <label class="row">
+            <span>Your keyboard</span>
+            <select id="device-size">
+              <option value="48-72">25 keys (C3 to C5)</option>
+              <option value="36-84" selected>49 keys (C2 to C6)</option>
+              <option value="36-96">61 keys (C2 to C7)</option>
+              <option value="28-103">76 keys (E1 to G7)</option>
+              <option value="21-108">88 keys (A0 to C8)</option>
+            </select>
+          </label>
+          <label class="row">
+            <span>Fit notes to my keyboard</span>
+            <input id="fold" type="checkbox" checked />
+          </label>
+          <label class="row">
+            <span>Show note names</span>
+            <input id="labels" type="checkbox" checked />
+          </label>
+          <label class="row">
+            <span>Zoom</span>
+            <input id="zoom" type="range" min="1.5" max="6" step="0.1" value="3.2" />
+          </label>
+          <label class="row">
+            <span>Volume</span>
+            <input id="volume" type="range" min="0" max="1" step="0.05" value="0.8" />
+          </label>
+          <label class="row">
+            <span>Play my keys through the speakers</span>
+            <input id="monitor" type="checkbox" checked />
+          </label>
+          <p class="muted">
+            No MIDI keyboard handy? The computer keys work too: <kbd>A</kbd> to <kbd>'</kbd> are the white
+            keys, the row above is the black keys, and <kbd>Z</kbd> / <kbd>X</kbd> change octave.
+          </p>
+        </aside>
+
+        <section class="start" id="start">
+          <div class="start-inner">
+            <h1>Learn any song on your keys.</h1>
+            <p class="lede">
+              Drop in a MIDI, Guitar Pro, MusicXML, or text tab file. The notes fall onto the keyboard and
+              the song waits until you play the right ones.
+            </p>
+            <button class="drop" id="drop">
+              <span class="drop-icon" aria-hidden="true">♪</span>
+              <strong>Drop a song here</strong>
+              <span>or click to choose a file. It stays on your computer.</span>
+            </button>
+            <p class="error" id="error" hidden></p>
+
+            <div class="shelves">
+              <div class="shelf" id="saved-shelf" hidden>
+                <h2>Your songs</h2>
+                <ul id="saved-list"></ul>
+              </div>
+              <div class="shelf">
+                <h2>Free to play</h2>
+                <ul id="bundled-list"></ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="done" id="done" hidden>
+          <div class="done-card">
+            <h2 id="done-title">Nicely done!</h2>
+            <div class="done-stats">
+              <div><b id="done-acc">0%</b><span>accuracy</span></div>
+              <div><b id="done-hits">0</b><span>right notes</span></div>
+              <div><b id="done-wrong">0</b><span>slips</span></div>
+              <div><b id="done-streak">0</b><span>best streak</span></div>
+            </div>
+            <div class="done-actions">
+              <button id="done-again" class="primary">Play it again</button>
+              <button id="done-home">Pick another song</button>
+            </div>
+          </div>
+        </section>
+
+        <div class="dropping" id="dropping" hidden>Drop it!</div>
+      </main>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

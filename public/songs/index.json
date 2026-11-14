@@ -1,0 +1,42 @@
+[
+  {
+    "file": "twinkle.gp",
+    "title": "Twinkle, Twinkle, Little Star",
+    "composer": "Traditional",
+    "level": "Beginner",
+    "license": "CC0-1.0",
+    "provenance": "Traditional melody (public domain). Arrangement written for this repo."
+  },
+  {
+    "file": "ode-to-joy.gp",
+    "title": "Ode to Joy",
+    "composer": "Ludwig van Beethoven",
+    "level": "Beginner",
+    "license": "CC0-1.0",
+    "provenance": "Beethoven, Symphony No. 9 (1824, public domain). Arrangement written for this repo."
+  },
+  {
+    "file": "minuet-in-g.gp",
+    "title": "Minuet in G (BWV Anh. 114)",
+    "composer": "Christian Petzold",
+    "level": "Intermediate",
+    "license": "CC0-1.0",
+    "provenance": "Christian Petzold, Notebook for Anna Magdalena Bach (1725, public domain). Arrangement written for this repo."
+  },
+  {
+    "file": "fur-elise.gp",
+    "title": "Für Elise (opening)",
+    "composer": "Ludwig van Beethoven",
+    "level": "Intermediate",
+    "license": "CC0-1.0",
+    "provenance": "Beethoven, WoO 59 (1810, public domain). Arrangement written for this repo."
+  },
+  {
+    "file": "tower-stairs.gp",
+    "title": "Tower Stairs",
+    "composer": "Keys Wizard contributors",
+    "level": "Beginner",
+    "license": "CC0-1.0",
+    "provenance": "Original guitar etude written for this repo."
+  }
+]

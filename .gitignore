@@ -1,0 +1,32 @@
+node_modules/
+dist/
+scratch/
+*.log
+.DS_Store
+
+# --- Song files -------------------------------------------------------------
+# This repo is public. Only songs we are allowed to share may be committed,
+# and they live in public/songs/ (see AGENTS.md, "Songs and copyright").
+# Everything else is ignored so a personal file cannot slip in by accident.
+# Keep your own songs in local-songs/ or just drop them into the app.
+local-songs/
+*.gp
+*.gp3
+*.gp4
+*.gp5
+*.gp7
+*.gpx
+*.gtp
+*.ptb
+*.tg
+*.mid
+*.midi
+*.kar
+*.rmi
+*.musicxml
+*.mxl
+*.mscz
+*.tab
+!public/songs/*.gp
+!public/songs/*.mid
+!public/songs/*.musicxml

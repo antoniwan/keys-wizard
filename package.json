@@ -1,0 +1,27 @@
+{
+  "name": "keys-wizard",
+  "version": "0.1.0",
+  "description": "Drop in a MIDI, Guitar Pro, or tab file and learn it on your keyboard. The song waits for you.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "repository": "github:antoniwan/keys-wizard",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "songs": "node scripts/build-songs.mjs"
+  },
+  "dependencies": {
+    "@coderline/alphatab": "^1.9.0",
+    "@tonejs/midi": "^2.0.28"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.8",
+    "vitest": "^5.1.0"
+  }
+}
