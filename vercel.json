@@ -6,9 +6,9 @@
   "trailingSlash": false,
   "redirects": [
     {
-      "source": "/:path*",
+      "source": "/(.*)",
       "has": [{ "type": "host", "value": "keys-wizard.vercel.app" }],
-      "destination": "https://keys.antoniwan.online/:path*",
+      "destination": "https://keys.antoniwan.online/$1",
       "permanent": true
     }
   ],
