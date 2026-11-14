@@ -67,6 +67,7 @@ Stack: Vite, TypeScript, no UI framework, one canvas. Web MIDI for the keyboard,
 | `src/input/` | USB MIDI, microphone pitch detection, and computer-keyboard input. All three call the same `noteOn` and `noteOff`. |
 | `src/audio/synth.ts` | A small synth, so a silent controller makes sound. It uses no samples, so there is nothing to license. |
 | `src/view/roll.ts` | Draws the falling notes and the keyboard. |
+| `src/view/staff.ts` | Draws the sheet-music strip: note heads on a grand staff, pitch only, no rhythm. |
 | `src/main.ts` | Wires the page together. |
 
 Conventions:

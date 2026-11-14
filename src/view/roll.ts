@@ -28,7 +28,7 @@ interface Spark {
 }
 
 // One colour per playable track: first is usually the right hand, second the left.
-const TRACK_COLORS = [
+export const TRACK_COLORS = [
   { fill: '#5ee1ff', dark: '#2a9fd0' },
   { fill: '#ffb454', dark: '#d9832a' },
   { fill: '#c792ff', dark: '#9258dc' },

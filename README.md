@@ -12,6 +12,7 @@ It runs in the browser. Your song files stay on your computer.
 - **Fits the song to your keys.** Guitar and bass parts sit low. The app shifts them by octaves to land on a 25, 49, 61, 76, or 88-key board.
 - **Lets you choose your part.** Each track can be yours to play, play along as backing, or be muted.
 - **Helps you drill.** Slow the tempo down to 25%, loop a hard passage with A and B, and watch your accuracy and streak.
+- **Teaches the staff.** A strip of sheet music scrolls above the falling notes, so you learn where each key sits on the treble and bass clef. The keys you press show up on it too. It shows pitch only, not rhythm. The Staff button hides it.
 - **Makes sound.** A built-in synth plays your notes and the backing tracks, so a controller with no speakers still sings.
 - **Has a microphone mode** for acoustic instruments. It hears one note at a time, so it suits melodies. A MIDI keyboard is faster and exact.
 

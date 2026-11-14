@@ -50,6 +50,7 @@
             <button id="oct-up" aria-label="Octave up">+8va</button>
           </div>
 
+          <button id="staff-btn" aria-pressed="true" title="Show or hide the sheet music strip">Staff</button>
           <button id="tracks-btn" aria-expanded="false">Tracks</button>
           <button id="settings-btn" aria-expanded="false">Settings</button>
         </div>
@@ -68,6 +69,8 @@
         <div class="progress-loop" id="progress-loop"></div>
         <div class="progress-fill" id="progress-fill"></div>
       </div>
+
+      <canvas id="staff" hidden aria-label="Sheet music: the notes on the treble and bass clef"></canvas>
 
       <main>
         <canvas id="roll"></canvas>

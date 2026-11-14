@@ -242,6 +242,16 @@ button.on {
   display: none;
 }
 
+/* Sheet music strip */
+#staff {
+  display: block;
+  width: 100%;
+  height: clamp(120px, 19vh, 176px);
+  flex: none;
+  background: #100d20;
+  border-bottom: 1px solid var(--line);
+}
+
 /* Stage */
 main {
   position: relative;

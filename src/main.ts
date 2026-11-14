@@ -7,7 +7,8 @@ import { connectMidi } from './input/midi';
 import { fetchBundled, listBundled, listSaved, removeSaved, saveSong } from './library';
 import { ACCEPT, loadSong } from './song/load';
 import type { Role, Song } from './song/types';
-import { Roll, type KeyState } from './view/roll';
+import { Roll, type Frame, type KeyState } from './view/roll';
+import { Staff } from './view/staff';
 
 const $ = <T extends HTMLElement = HTMLElement>(id: string) => document.getElementById(id) as T;
 
@@ -21,6 +22,7 @@ interface Settings {
   zoom: number;
   volume: number;
   monitor: boolean;
+  staff: boolean;
 }
 
 const defaults: Settings = {
@@ -31,6 +33,7 @@ const defaults: Settings = {
   zoom: 3.2,
   volume: 0.8,
   monitor: true,
+  staff: true,
 };
 
 function readSettings(): Settings {
@@ -55,6 +58,7 @@ function saveSettings(): void {
 const synth = new Synth();
 const practice = new Practice();
 const roll = new Roll($<HTMLCanvasElement>('roll'));
+const staff = new Staff($<HTMLCanvasElement>('staff'));
 const pressed = new Map<number, KeyState>();
 let song: Song | null = null;
 let notes: PNote[] = [];
@@ -73,6 +77,7 @@ function rebuild(keepTime: boolean): void {
   notes = prepare(song, { transpose, fold: settings.fold ? settings.device : null });
   practice.load(notes, song.duration, keepTime);
   roll.setNotes(notes, settings.device);
+  staff.setNotes(notes);
   $('oct-out').textContent = `${transpose > 0 ? '+' : ''}${transpose / 12}`;
 }
 
@@ -95,6 +100,7 @@ async function openSong(name: string, bytes: Uint8Array, remember: boolean): Pro
     for (const id of ['song-info', 'controls', 'progress', 'hud']) $(id).hidden = false;
     $('start').hidden = true;
     $('done').hidden = true;
+    syncStaff();
     renderTracks();
     renderLoop();
     syncControls();
@@ -117,6 +123,7 @@ function showStart(): void {
     $(id).hidden = true;
   }
   $('start').hidden = false;
+  syncStaff();
   void renderShelves();
 }
 
@@ -254,6 +261,12 @@ function setPlaying(on: boolean): void {
   syncControls();
 }
 
+function syncStaff(): void {
+  $('staff').hidden = !song || !settings.staff;
+  $('staff-btn').classList.toggle('on', settings.staff);
+  $('staff-btn').setAttribute('aria-pressed', String(settings.staff));
+}
+
 function restart(): void {
   practice.restart();
   shownDone = false;
@@ -326,8 +339,7 @@ function frame(now: number): void {
     }
   }
 
-  roll.draw(
-    {
+  const view: Frame = {
       notes,
       state: practice.state,
       time: practice.time,
@@ -336,9 +348,9 @@ function frame(now: number): void {
       pressed,
       device: settings.device,
       labels: settings.labels,
-    },
-    dt,
-  );
+  };
+  roll.draw(view, dt);
+  if (song && settings.staff) staff.draw(view);
   requestAnimationFrame(frame);
 }
 
@@ -421,6 +433,12 @@ $('progress').onclick = (e) => {
   practice.seek(((e.clientX - rect.left) / rect.width) * song.duration - 0.5);
   shownDone = false;
   $('done').hidden = true;
+};
+
+$('staff-btn').onclick = () => {
+  settings.staff = !settings.staff;
+  saveSettings();
+  syncStaff();
 };
 
 // Panels
