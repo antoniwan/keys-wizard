@@ -70,7 +70,7 @@ Stack: Vite, TypeScript, no UI framework, one canvas. Web MIDI for the keyboard,
 | `src/view/staff.ts` | Draws the sheet-music strip: note heads on a grand staff, pitch only, no rhythm. |
 | `src/main.ts` | Wires the page together. |
 | `about.html`, `privacy.html`, `404.html` | The text pages. They share `src/pages.css`. |
-| `vite.config.ts` | Lists the pages and writes `sitemap.xml`, `robots.txt`, and `llms.txt` at build time. |
+| `vite.config.ts` | Lists the pages and writes `sitemap.xml`, `robots.txt`, and `llms.txt` at build time. On the live build only, it adds the visit counters (Vercel Web Analytics and Stats, Antonio's Umami). |
 | `package.json` | Its `homepage` field is the public address of the site. |
 | `vercel.json` | Clean URLs and security headers for Vercel. |
 | `docs/antoniwan-online/` | Info package for the Projects page of antoniwan.online. |
@@ -82,6 +82,7 @@ Conventions:
 - New file formats go through `loadSong` and return a `Song`. Add a test.
 - Do not add sampled instruments, sound fonts, or fonts unless their licence allows redistribution and you record it. The same care that applies to songs applies to every asset.
 - Text in the app and in the README files follows ASD-STE100 Simplified Technical English as far as is practical: short sentences, one idea in each, active voice, simple words, the same word for the same thing. Say what happened and what to do next. Be honest about what the app cannot do.
+- Buttons and links that ask the person to do something carry `data-umami-event="cta"` and a `data-umami-event-label`. Never put a person's own song name or file name into an event. A new or removed label also goes in Antonio's all-sites stats page (`lib/ctas.js` in `antoniwan/tstlss`).
 - The privacy page is a promise. If a change makes the app send data to a server, add analytics, set a cookie, or load a file from a different company, change `privacy.html` in the same commit and tell Antonio first.
 - A new page needs an entry in `PAGES` in `vite.config.ts`, a canonical link, and its own title and description.
 - Code is MIT (`LICENSE`). Bundled songs are CC0 (`public/songs/README.md`).
