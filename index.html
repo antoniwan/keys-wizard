@@ -136,7 +136,7 @@
         <div class="status">
           <button id="midi-chip" class="chip" title="USB MIDI keyboard">MIDI: searching…</button>
           <button id="mic-btn" class="chip" title="Use the microphone to hear an instrument. The microphone hears one note at a time">Microphone off</button>
-          <button id="open-btn" class="primary">Open song</button>
+          <button id="open-btn" class="primary" data-umami-event="cta" data-umami-event-label="open-song">Open song</button>
           <input id="file" type="file" hidden />
         </div>
       </header>
@@ -214,7 +214,7 @@
               Open a MIDI, Guitar Pro, MusicXML, or text tab file. The notes fall onto the keyboard. The song
               waits until you play the correct notes.
             </p>
-            <button class="drop" id="drop">
+            <button class="drop" id="drop" data-umami-event="cta" data-umami-event-label="drop-song">
               <span class="drop-icon" aria-hidden="true">♪</span>
               <strong>Drop a song file here</strong>
               <span>Or click to select a file. The file stays on your computer.</span>
@@ -237,8 +237,8 @@
               <nav aria-label="Pages">
                 <a href="/about">About</a>
                 <a href="/privacy">Privacy</a>
-                <a href="https://github.com/antoniwan/keys-wizard">GitHub</a>
-                <a href="https://antoniwan.online" rel="author">Made by antoniwan</a>
+                <a href="https://github.com/antoniwan/keys-wizard" data-umami-event="cta" data-umami-event-label="source">GitHub</a>
+                <a href="https://antoniwan.online" rel="author" data-umami-event="cta" data-umami-event-label="made-by">Made by antoniwan</a>
               </nav>
             </footer>
           </div>
@@ -254,8 +254,8 @@
               <div><b id="done-streak">0</b><span>best streak</span></div>
             </div>
             <div class="done-actions">
-              <button id="done-again" class="primary">Play again</button>
-              <button id="done-home">Select a different song</button>
+              <button id="done-again" class="primary" data-umami-event="cta" data-umami-event-label="play-again">Play again</button>
+              <button id="done-home" data-umami-event="cta" data-umami-event-label="pick-another-song">Select a different song</button>
             </div>
           </div>
         </section>

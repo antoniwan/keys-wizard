@@ -16,6 +16,64 @@ const PAGES = [
   { path: '/privacy', file: 'privacy.html', priority: '0.4' },
 ];
 
+/**
+ * Visit counts, on the live site only. Vercel sets VERCEL_ENV to "production" for the build of main, so
+ * local builds, tests, and previews add nothing. Two counters run side by side, and neither sets a cookie:
+ * Vercel Web Analytics (served from this site) and Stats, the Umami that Antonio hosts for all his sites.
+ * The privacy page says what they see. If this changes, change privacy.html in the same commit.
+ */
+const STATS = {
+  host: 'https://antoniwan-stats.vercel.app',
+  websiteId: 'ef253480-5d25-4742-9b86-c8bda7969488',
+};
+
+/**
+ * Runs before the counters load. Clicks on links to other sites become an "outbound" event with the host and
+ * the address without its query. A call to action (data-umami-event="cta") that leaves the site keeps its
+ * own event and gets the same two properties, so the click counts once.
+ */
+const STATS_HOOK = `window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+document.addEventListener('click', function (event) {
+  var link = event.target instanceof Element ? event.target.closest('a[href]') : null;
+  if (!link) return;
+  var url = new URL(link.href, location.href);
+  if (!/^https?:$/.test(url.protocol) || url.host === location.host) return;
+  if (link.getAttribute('data-umami-event') === 'cta') {
+    link.setAttribute('data-umami-event-to', url.hostname);
+    link.setAttribute('data-umami-event-url', url.origin + url.pathname);
+    return;
+  }
+  if (link.hasAttribute('data-umami-event')) return;
+  if (window.umami) window.umami.track('outbound', { to: url.hostname, url: url.origin + url.pathname });
+}, true);`;
+
+/** Adds the visit counters to every page of the live site. */
+function analytics(): Plugin {
+  const live = process.env.VERCEL_ENV === 'production';
+  return {
+    name: 'keys-wizard-analytics',
+    apply: 'build',
+    transformIndexHtml: () =>
+      live
+        ? [
+            { tag: 'script', children: STATS_HOOK, injectTo: 'head' },
+            { tag: 'script', attrs: { defer: true, src: '/_vercel/insights/script.js' }, injectTo: 'head' },
+            {
+              tag: 'script',
+              attrs: {
+                defer: true,
+                src: `${STATS.host}/p.js`,
+                'data-website-id': STATS.websiteId,
+                'data-domains': new URL(SITE).hostname,
+                'data-do-not-track': 'true',
+              },
+              injectTo: 'head',
+            },
+          ]
+        : [],
+  };
+}
+
 /** Puts the site address into each page where it says %SITE_URL%. */
 function siteUrl(): Plugin {
   return {
@@ -51,7 +109,7 @@ function seoFiles(): Plugin {
           '',
           '> A free web app to learn songs on a MIDI keyboard. You open a MIDI, Guitar Pro, MusicXML, or text tab file. The notes fall onto a keyboard on the screen. The song waits until you play the correct key.',
           '',
-          'Keys Wizard runs in the browser. It has no accounts, no ads, and no analytics. Song files stay on the computer of the person who uses it. The code is open source (MIT). It was made by Antonio Rodríguez Martínez (antoniwan).',
+          'Keys Wizard runs in the browser. It has no accounts, no ads, and no cookies. It counts visits without cookies. Song files stay on the computer of the person who uses it. The code is open source (MIT). It was made by Antonio Rodríguez Martínez (antoniwan).',
           '',
           '## Pages',
           '',
@@ -87,7 +145,7 @@ function cleanUrls(): Plugin {
 
 export default defineConfig({
   server: { port: 5183 },
-  plugins: [siteUrl(), cleanUrls(), seoFiles()],
+  plugins: [siteUrl(), cleanUrls(), seoFiles(), analytics()],
   build: {
     chunkSizeWarningLimit: 2500,
     rollupOptions: {

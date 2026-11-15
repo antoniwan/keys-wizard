@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Privacy: Keys Wizard keeps your songs on your computer</title>
-    <meta name="description" content="Keys Wizard has no accounts, no ads, no cookies, and no analytics. Your song files, your MIDI notes, and your microphone sound stay in your browser." />
+    <meta name="description" content="Keys Wizard has no accounts, no ads, and no cookies. It counts visits without cookies. Your song files, your MIDI notes, and your microphone sound stay in your browser." />
     <link rel="canonical" href="%SITE_URL%/privacy" />
     <meta name="theme-color" content="#15122a" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -12,7 +12,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Keys Wizard" />
     <meta property="og:title" content="Privacy: Keys Wizard" />
-    <meta property="og:description" content="No accounts, no ads, no cookies, no analytics. Your songs stay on your computer." />
+    <meta property="og:description" content="No accounts, no ads, no cookies. Visits are counted without cookies. Your songs stay on your computer." />
     <meta property="og:url" content="%SITE_URL%/privacy" />
     <meta property="og:image" content="%SITE_URL%/og.png" />
     <meta property="og:image:width" content="1200" />
@@ -30,7 +30,7 @@
             "url": "%SITE_URL%/privacy",
             "name": "Privacy: Keys Wizard",
             "inLanguage": "en",
-            "dateModified": "2026-11-14",
+            "dateModified": "2026-11-15",
             "isPartOf": { "@id": "%SITE_URL%/#website" }
           },
           {
@@ -57,17 +57,17 @@
     <main>
       <h1>Privacy</h1>
       <p class="lede">
-        Keys Wizard does not collect data about you. Your songs, your notes, and your microphone sound stay in
-        your browser.
+        Keys Wizard counts visits, but it does not collect data that identifies you. Your songs, your notes, and
+        your microphone sound stay in your browser.
       </p>
-      <p class="muted">Last change: November 14, 2026.</p>
+      <p class="muted">Last change: November 15, 2026.</p>
 
       <h2>The short version</h2>
       <ul>
         <li>There are no accounts.</li>
         <li>There are no ads.</li>
         <li>There are no cookies.</li>
-        <li>There is no analytics and no tracking.</li>
+        <li>The site counts visits and button clicks. It does not use cookies for this and does not follow you to other sites.</li>
         <li>The app does not upload your song files.</li>
         <li>The app does not record or send sound from your microphone.</li>
       </ul>
@@ -113,6 +113,29 @@
         permission in the settings of your browser at any time.
       </p>
 
+      <h2>Visit counts</h2>
+      <p>
+        I want to know if people use the app, and which parts they use. For this, the live site uses two counters.
+        Neither one sets a cookie, and neither one sees your songs, your notes, or your microphone.
+      </p>
+      <ul>
+        <li>
+          <strong>Stats</strong> is my own copy of <a href="https://umami.is">Umami</a>, an open-source counter. It
+          runs on Vercel. It receives the page address, the site that sent you, your browser, your operating
+          system, your screen size, your language, and your country. It does not keep your IP address. It also
+          counts clicks on some buttons, for example "Open song" or a free song. For a song in "Your songs", it
+          counts only the click, not the name of the song. It counts links to other sites by their address. If
+          your browser sends "Do Not Track", Stats does not count you.
+        </li>
+        <li>
+          <strong>Vercel Web Analytics</strong> receives the page address, the site that sent you, your browser,
+          your operating system, your device type, and your country. To count visitors, it uses a code made from
+          your request that changes every day. Read
+          <a href="https://vercel.com/docs/analytics/privacy-policy">how Vercel Web Analytics uses data</a>.
+        </li>
+      </ul>
+      <p>I see only totals. I do not sell or share this data.</p>
+
       <h2>What the host can see</h2>
       <p>
         <a href="https://vercel.com">Vercel</a> hosts this site. When your browser gets a page, the Vercel servers
@@ -121,8 +144,8 @@
         <a href="https://vercel.com/legal/privacy-policy">Vercel privacy policy</a>.
       </p>
       <p>
-        The page does not load fonts, scripts, or pictures from other companies. Links to other sites, such as
-        GitHub, open only when you select them.
+        The page does not load fonts or pictures from other companies. The only script from a different address is
+        the Stats counter. Links to other sites, such as GitHub, open only when you select them.
       </p>
 
       <h2>How to remove your data</h2>

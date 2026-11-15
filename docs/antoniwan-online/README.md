@@ -37,7 +37,7 @@ The `body` is written in the first person, like the other entries. Change the wo
 | Host | Vercel, team SHSH, project `keys-wizard`. Each push to `main` deploys. |
 | Code license | MIT |
 | Song license | CC0 1.0 |
-| Cost to use | Free. No accounts, no ads, no analytics. |
+| Cost to use | Free. No accounts, no ads, no cookies. Visits are counted without cookies. |
 | Language | English |
 
 ## 3. Text you can use

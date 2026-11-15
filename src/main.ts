@@ -141,6 +141,9 @@ async function renderShelves(): Promise<void> {
       const li = document.createElement('li');
       const card = songCard(b.title, b.composer, b.level);
       card.title = `${b.provenance} License: ${b.license}.`;
+      card.dataset.umamiEvent = 'cta';
+      card.dataset.umamiEventLabel = 'free-song';
+      card.dataset.umamiEventSong = b.file;
       card.onclick = async () => {
         try {
           await openSong(b.file, await fetchBundled(b.file), false);
@@ -159,6 +162,9 @@ async function renderShelves(): Promise<void> {
     ...saved.map((s) => {
       const li = document.createElement('li');
       const card = songCard(s.title, s.name, '');
+      // Counted as a click only. The name of a person's own song never leaves the browser.
+      card.dataset.umamiEvent = 'cta';
+      card.dataset.umamiEventLabel = 'saved-song';
       card.onclick = () => openSong(s.name, s.bytes, false);
       const remove = document.createElement('button');
       remove.className = 'remove';
