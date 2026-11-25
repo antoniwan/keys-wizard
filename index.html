@@ -134,7 +134,7 @@
         <div class="spacer"></div>
 
         <div class="status">
-          <button id="midi-chip" class="chip" title="USB MIDI keyboard">MIDI: searching…</button>
+          <button id="midi-chip" class="chip" aria-expanded="false" aria-controls="midi-panel" title="USB MIDI keyboard. Click for details">MIDI: searching…</button>
           <button id="mic-btn" class="chip" title="Use the microphone to hear an instrument. The microphone hears one note at a time">Microphone off</button>
           <button id="open-btn" class="primary" data-umami-event="cta" data-umami-event-label="open-song">Open song</button>
           <input id="file" type="file" hidden />
@@ -163,6 +163,17 @@
           <h2>Tracks</h2>
           <p class="muted">Select the track that you play. A backing track plays with you. A muted track is hidden.</p>
           <div id="tracks-list"></div>
+        </aside>
+
+        <aside class="panel" id="midi-panel" aria-live="polite" hidden>
+          <h2 id="midi-title">MIDI keyboard</h2>
+          <p id="midi-reason"></p>
+          <ol class="steps" id="midi-steps"></ol>
+          <button id="midi-retry" data-umami-event="cta" data-umami-event-label="midi-search-again">Search again</button>
+          <details class="tech">
+            <summary>Technical details</summary>
+            <pre id="midi-tech"></pre>
+          </details>
         </aside>
 
         <aside class="panel" id="settings-panel" hidden>

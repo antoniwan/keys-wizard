@@ -4,6 +4,7 @@ import { autoTranspose, prepare, type PNote, type Range } from './engine/prepare
 import { connectComputerKeys } from './input/keys';
 import { MicInput } from './input/mic';
 import { connectMidi, type MidiStatus } from './input/midi';
+import { detectBrowser, midiHelp } from './input/midi-help';
 import { fetchBundled, listBundled, listSaved, removeSaved, saveSong } from './library';
 import { ACCEPT, loadSong } from './song/load';
 import type { Role, Song } from './song/types';
@@ -468,7 +469,11 @@ $('staff-btn').onclick = () => {
 
 // Panels
 function togglePanel(panelId: string): void {
-  for (const [p, b] of [['tracks-panel', 'tracks-btn'], ['settings-panel', 'settings-btn']]) {
+  for (const [p, b] of [
+    ['tracks-panel', 'tracks-btn'],
+    ['settings-panel', 'settings-btn'],
+    ['midi-panel', 'midi-chip'],
+  ]) {
     const show = p === panelId ? $(p).hidden : false;
     $(p).hidden = !show;
     $(b).setAttribute('aria-expanded', String(show));
@@ -560,6 +565,8 @@ window.addEventListener('keydown', (e) => {
   } else if (e.code === 'Escape') {
     $('tracks-panel').hidden = true;
     $('settings-panel').hidden = true;
+    $('midi-panel').hidden = true;
+    $('midi-chip').setAttribute('aria-expanded', 'false');
   }
 });
 
@@ -604,26 +611,59 @@ canvas.addEventListener('pointercancel', release);
 
 // Inputs
 connectComputerKeys(fromKeys);
+const midiEnv = {
+  browser: detectBrowser(navigator.userAgent, navigator.maxTouchPoints),
+  framed: window.self !== window.top,
+};
 const onMidiStatus = (status: MidiStatus) => {
   const chip = $('midi-chip');
   chip.classList.toggle('ok', status.state === 'connected');
   chip.classList.toggle('warn', status.state === 'denied' || status.state === 'unsupported');
+  const help = midiHelp(status, midiEnv);
   if (status.state === 'connected') {
     chip.textContent = `MIDI: ${status.devices.join(', ')}`;
-    chip.title = `Connected: ${status.devices.join(', ')}`;
   } else if (status.state === 'none') {
     chip.textContent = 'MIDI: connect a keyboard';
-    chip.title = 'No MIDI keyboard found. Connect one with USB. Click to search again.';
   } else if (status.state === 'denied') {
-    chip.textContent = 'MIDI: permission necessary';
-    chip.title = 'Allow MIDI devices for this page in your browser. Then click here.';
+    chip.textContent = 'MIDI: permission blocked';
   } else {
     chip.textContent = 'MIDI: not supported';
-    chip.title = 'This browser does not support MIDI. Use Chrome, Edge, or Firefox.';
   }
+  chip.title = `${help.title}. Click for details`;
+
+  // The help panel: why, what to do, and the raw facts for a bug report.
+  $('midi-title').textContent = help.title;
+  $('midi-reason').textContent = help.reason;
+  $('midi-steps').replaceChildren(
+    ...help.steps.map((step) => {
+      const li = document.createElement('li');
+      li.textContent = step;
+      return li;
+    }),
+  );
+  $('midi-tech').textContent = [
+    `Status: ${status.state}`,
+    status.state === 'unsupported' ? `Reason: ${status.reason}` : '',
+    status.state === 'denied' ? `Error: ${status.error}` : '',
+    `Browser: ${midiEnv.browser}`,
+    `Secure page: ${window.isSecureContext ? 'yes' : 'no'}`,
+    `In a frame: ${midiEnv.framed ? 'yes' : 'no'}`,
+    `Web MIDI in browser: ${'requestMIDIAccess' in navigator ? 'yes' : 'no'}`,
+    `User agent: ${navigator.userAgent}`,
+  ]
+    .filter(Boolean)
+    .join('\n');
 };
-void connectMidi(fromKeys, onMidiStatus);
-$('midi-chip').onclick = () => void connectMidi(fromKeys, onMidiStatus);
+const searchMidi = () => {
+  $('midi-chip').textContent = 'MIDI: searching…';
+  void connectMidi(fromKeys, onMidiStatus);
+};
+searchMidi();
+$('midi-chip').onclick = () => {
+  togglePanel('midi-panel');
+  if (!$('midi-panel').hidden) searchMidi();
+};
+$('midi-retry').onclick = searchMidi;
 
 const micBtn = $('mic-btn');
 micBtn.onclick = async () => {
