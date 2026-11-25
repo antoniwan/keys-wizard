@@ -4,8 +4,8 @@ export interface NoteHandlers {
 }
 
 export type MidiStatus =
-  | { state: 'unsupported' }
-  | { state: 'denied' }
+  | { state: 'unsupported'; reason: 'insecure' | 'browser' }
+  | { state: 'denied'; error: string }
   | { state: 'none' }
   | { state: 'connected'; devices: string[] };
 
@@ -15,14 +15,15 @@ export type MidiStatus =
  */
 export async function connectMidi(handlers: NoteHandlers, onStatus: (s: MidiStatus) => void): Promise<void> {
   if (!('requestMIDIAccess' in navigator)) {
-    onStatus({ state: 'unsupported' });
+    onStatus({ state: 'unsupported', reason: window.isSecureContext ? 'browser' : 'insecure' });
     return;
   }
   let access: MIDIAccess;
   try {
     access = await navigator.requestMIDIAccess();
-  } catch {
-    onStatus({ state: 'denied' });
+  } catch (err) {
+    const error = err instanceof Error ? `${err.name}: ${err.message}` : String(err);
+    onStatus({ state: 'denied', error });
     return;
   }
 
